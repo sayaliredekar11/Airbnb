@@ -16,16 +16,17 @@
     </p>
   </div>
 </div>
-<%= console.log(currUser) %>
+<% if(currUser && listings.owner._id.equals(currUser._id)) {  %>
 <div class="btns mb-3">
  <a href="/listings/<%= listings._id %>/edit" class="btn btn-dark col-1 offset-3 edit-btn">Edit</a>
 <form method="POST" action="/listings/<%= listings._id %>?_method=DELETE">
  <button class="btn btn-dark offset-5">Delete</button>
  </form>
  </div>
+ <% } %>
  <hr>
  <div class="col-8 offset-3 mb-3">
-  
+  <% if(currUser) { %>
 
   <h4>Leave a Review</h4>
   <form action="/listings/<%= listings.id %>/reviews" method="POST" novalidate class="needs-validation">
@@ -58,9 +59,11 @@
     <button class="btn btn-outline-dark">Submit</button>
   </form>
   <hr>
+  <% } %> 
   <p><b>All Reviews</b></p>
+  <% if(listings.reviews.length > 0) { %>
   <div class="row">
-  <% for(review of listings.reviews) { %> 
+ <% for(review of listings.reviews) { %> 
     <div class="card col-5 ms-3 mb-3">
       <div class="card-body">
        <h5 class="card-title">@<%= review.author.username  %></h5>
@@ -73,6 +76,7 @@
     </div>
   <% } %>
   </div>
+  <% } %>
  </div>
 </div>
 
