@@ -18,7 +18,6 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 const userRouter = require("./routes/user.js");
 const dbUrl = process.env.ATLASDB_URL;
-const crypto = require("crypto");
 
 main().then(() =>{
     console.log("connected to DB");
@@ -42,9 +41,9 @@ app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 const store = MongoStore.create({
     mongoUrl: dbUrl,
-    crypto:{
-        secret:process.env.SECRET,
-    },
+    
+    secret:process.env.SECRET,
+
     touchAfter:24*3600, //interval between session updates
 });
 store.on("error",()=>{
