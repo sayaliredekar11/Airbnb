@@ -19,6 +19,7 @@ const User = require("./models/user.js");
 const userRouter = require("./routes/user.js");
 const dbUrl = process.env.ATLASDB_URL;
 const expressLayouts = require("express-ejs-layouts");
+const crypto = require("crypto");
 main().then(() =>{
     console.log("connected to DB");
 })
@@ -42,8 +43,9 @@ app.use(express.static(path.join(__dirname,"/public")));
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     
-    secret:process.env.SECRET,
-
+    crypto:{
+        secret:process.env.SECRET,
+    },
     touchAfter:24*3600, //interval between session updates
 });
 store.on("error",()=>{
